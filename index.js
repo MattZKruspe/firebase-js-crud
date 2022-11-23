@@ -1,13 +1,31 @@
-import { saveTask } from './firebase.js'
+import { saveTask, getTasks, onGetTasks } from './firebase.js';
 
-window.addEventListener('DOMContentLoaded', () => {
-// console.log("hola");
+const taskForm = document.getElementById('task-form');
+const tasksContainer = document.getElementById('tasks-container');
 
-})
+window.addEventListener('DOMContentLoaded', async () => {
+    // console.log("hola");
+    // const querySnapshot = await getTasks();
+    onGetTasks((querySnapshot) => {
+        let html = "";
 
-const taskForm = document.getElementById('task-form')
+        querySnapshot.forEach((doc) => {
+            const task = doc.data();
+            // console.log(doc)
+            html += `
+            <div>
+                <h3>${task.title}</h3>
+                <p>${task.description}</p>
+            </div>
+            `;
+        });
+        tasksContainer.innerHTML = html;
+    });
+});
 
-taskForm.addEventListener('submit', (e) =>{
+
+
+taskForm.addEventListener('submit', (e) => {
     e.preventDefault()
 
     const title = taskForm['task-title']
