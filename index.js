@@ -1,29 +1,36 @@
-import { saveTask, getTasks, onGetTasks } from './firebase.js';
+import { saveTask, getTasks, onGetTasks, deleteTask} from './firebase.js';
 
 const taskForm = document.getElementById('task-form');
 const tasksContainer = document.getElementById('tasks-container');
 
 window.addEventListener('DOMContentLoaded', async () => {
-    // console.log("hola");
-    // const querySnapshot = await getTasks();
     onGetTasks((querySnapshot) => {
         let html = "";
 
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach(doc => {
             const task = doc.data();
+            // console.log(doc.id);
             // console.log(doc)
             html += `
             <div>
                 <h3>${task.title}</h3>
                 <p>${task.description}</p>
+                <button class="btn-delete" data-id="${doc.id}">Delete</button>
             </div>
             `;
         });
         tasksContainer.innerHTML = html;
+
+        const btnsDelete = tasksContainer.querySelectorAll('.btn-delete')
+
+        btnsDelete.forEach(btn => {
+            btn.addEventListener('click', ({target:{dataset}}) => {
+                // console.log(dataset.id);
+                deleteTask(dataset.id)
+            })
+        })
     });
 });
-
-
 
 taskForm.addEventListener('submit', (e) => {
     e.preventDefault()
