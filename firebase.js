@@ -1,7 +1,7 @@
-
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, onSnapshot, doc, getDoc, updateDoc} from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js"
+import { } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -32,5 +32,7 @@ export const deleteTask = id => deleteDoc(doc(db, 'tasks', id))
 export const getTask = id => getDoc(doc(db, 'tasks', id))
 
 export const updateTask = (id, newFields) => updateDoc ( doc(db, 'tasks', id), newFields) 
+
+// export const saveImage = file => {console.log(file)}
 
 
